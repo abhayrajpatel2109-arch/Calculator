@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific & Interactive Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="calculator-container">
+        <!-- Header / Controls -->
+        <div class="calc-header">
+            <span class="app-title"><i class="fa-solid fa-calculator"></i> Pro Calc</span>
+            <div class="header-actions">
+                <button id="theme-toggle" title="Toggle Theme"><i class="fa-solid fa-sun"></i></button>
+                <button id="history-toggle" title="Toggle History"><i class="fa-solid fa-clock-rotate-left"></i></button>
+            </div>
+        </div>
+
+        <!-- Display Area -->
+        <div class="calc-display">
+            <div id="history-expression" class="history-expression"></div>
+            <div id="main-display" class="main-display">0</div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="calc-mode-bar">
+            <button class="mode-btn active" data-mode="basic">Basic</button>
+            <button class="mode-btn" data-mode="scientific">Scientific</button>
+        </div>
+
+        <!-- Memory Bar -->
+        <div class="memory-bar">
+            <button class="mem-btn" onclick="handleMemory('MC')">MC</button>
+            <button class="mem-btn" onclick="handleMemory('MR')">MR</button>
+            <button class="mem-btn" onclick="handleMemory('M+')">M+</button>
+            <button class="mem-btn" onclick="handleMemory('M-')">M-</button>
+            <button class="mem-btn" onclick="handleMemory('MS')">MS</button>
+        </div>
+
+        <!-- Keypad -->
+        <div class="keypad">
+            <!-- Scientific Section (hidden by default in basic mode) -->
+            <div class="sci-keys hidden">
+                <button class="btn sci" onclick="appendFunction('sin(')">sin</button>
+                <button class="btn sci" onclick="appendFunction('cos(')">cos</button>
+                <button class="btn sci" onclick="appendFunction('tan(')">tan</button>
+                <button class="btn sci" onclick="appendFunction('log(')">log</button>
+                <button class="btn sci" onclick="appendFunction('ln(')">ln</button>
+                <button class="btn sci" onclick="appendOperator('^')">x^y</button>
+                <button class="btn sci" onclick="appendFunction('sqrt(')">√</button>
+                <button class="btn sci" onclick="appendValue('π')">π</button>
+                <button class="btn sci" onclick="appendValue('e')">e</button>
+                <button class="btn sci" onclick="appendValue('(')">(</button>
+                <button class="btn sci" onclick="appendValue(')')">)</button>
+                <button class="btn sci" onclick="appendFunction('abs(')">|x|</button>
+            </div>
+
+            <!-- Standard Section -->
+            <div class="standard-keys">
+                <button class="btn action danger" onclick="clearAll()">AC</button>
+                <button class="btn action" onclick="deleteLast()"><i class="fa-solid fa-backspace"></i></button>
+                <button class="btn action" onclick="appendValue('%')">%</button>
+                <button class="btn operator" onclick="appendOperator('/')">÷</button>
+
+                <button class="btn number" onclick="appendValue('7')">7</button>
+                <button class="btn number" onclick="appendValue('8')">8</button>
+                <button class="btn number" onclick="appendValue('9')">9</button>
+                <button class="btn operator" onclick="appendOperator('*')">×</button>
+
+                <button class="btn number" onclick="appendValue('4')">4</button>
+                <button class="btn number" onclick="appendValue('5')">5</button>
+                <button class="btn number" onclick="appendValue('6')">6</button>
+                <button class="btn operator" onclick="appendOperator('-')">−</button>
+
+                <button class="btn number" onclick="appendValue('1')">1</button>
+                <button class="btn number" onclick="appendValue('2')">2</button>
+                <button class="btn number" onclick="appendValue('3')">3</button>
+                <button class="btn operator" onclick="appendOperator('+')">+</button>
+
+                <button class="btn number span-2" onclick="appendValue('0')">0</button>
+                <button class="btn number" onclick="appendValue('.')">.</button>
+                <button class="btn equals" onclick="calculateResult()">=</button>
+            </div>
+        </div>
+
+        <!-- History Drawer -->
+        <div id="history-drawer" class="history-drawer hidden">
+            <div class="history-header">
+                <button id="history-back-button" class="history-back-btn" title="Back to calculator" aria-label="Back to calculator"><i class="fa-solid fa-arrow-left"></i></button>
+                <span class="history-title"><i class="fa-solid fa-calculator"></i> Pro Calc</span>
+                <button onclick="clearHistory()" class="clear-hist-btn" title="Clear history" aria-label="Clear history"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <h2 class="history-section-title">Calculation History</h2>
+            <ul id="history-list" class="history-list">
+                <!-- History items will be inserted here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
